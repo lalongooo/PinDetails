@@ -1,5 +1,6 @@
 package com.example.pindetails.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,7 @@ public class FragmentMap extends Fragment implements
     private GoogleMap mGoogleMap;
     private AddressResultReceiver mResultReceiver;
     protected GoogleApiClient mGoogleApiClient;
+    private Vibrator vibrator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class FragmentMap extends Fragment implements
         mResultReceiver = new AddressResultReceiver(new Handler());
         mMapView = (MapView) fragmentView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
         buildGoogleApiClient();
         return fragmentView;
@@ -80,6 +84,7 @@ public class FragmentMap extends Fragment implements
 
     @Override
     public void onMapLongClick(LatLng latLng) {
+        vibrator.vibrate(50);
         mGoogleMap.clear();
         mGoogleMap.addMarker(new MarkerOptions().position(latLng));
         MapStateManager.saveMarker(getActivity(), latLng);
