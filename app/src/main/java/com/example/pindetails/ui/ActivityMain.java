@@ -1,7 +1,9 @@
-package com.example.pindetails;
+package com.example.pindetails.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import com.example.pindetails.R;
 
 public class ActivityMain extends FragmentActivity {
 

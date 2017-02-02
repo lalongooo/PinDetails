@@ -1,12 +1,8 @@
-package com.example.pindetails;
+package com.example.pindetails.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
-/**
- * Created by jorge.hernandez on 1/31/2017.
- */
 
 public class ActivitySplash extends AppCompatActivity {
 

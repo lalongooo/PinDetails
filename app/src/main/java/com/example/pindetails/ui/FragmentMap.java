@@ -1,4 +1,4 @@
-package com.example.pindetails;
+package com.example.pindetails.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.pindetails.R;
 import com.example.pindetails.service.FetchAddressIntentService;
+import com.example.pindetails.util.MapStateManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -60,13 +65,24 @@ public class FragmentMap extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        googleMap.setOnMapLongClickListener(this);
+        mGoogleMap.setOnMapLongClickListener(this);
+        CameraPosition position = MapStateManager.getSavedCameraPosition(getActivity());
+        if (position != null) {
+            CameraUpdate update = CameraUpdateFactory.newCameraPosition(position);
+            mGoogleMap.moveCamera(update);
+        }
+
+        MarkerOptions marker = MapStateManager.getMarker(getActivity());
+        if (marker != null) {
+            mGoogleMap.addMarker(marker);
+        }
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
         mGoogleMap.clear();
-        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Hi!"));
+        mGoogleMap.addMarker(new MarkerOptions().position(latLng));
+        MapStateManager.saveMarker(getActivity(), latLng);
         startIntentService(latLng.latitude, latLng.longitude);
     }
 
@@ -106,6 +122,7 @@ public class FragmentMap extends Fragment implements
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mMapView.onSaveInstanceState(outState);
+        MapStateManager.saveMapState(getActivity(), mGoogleMap);
     }
 
     @Override
