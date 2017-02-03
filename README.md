@@ -2,6 +2,9 @@
 A demo project showcasing how Google Maps for Android work.
 
 
+![Screenshot of PinDetails](http://i.imgur.com/95qDqPC.png)
+
+
 You can clone this project directly from Android Studio and click run.
 
 #### Features:
