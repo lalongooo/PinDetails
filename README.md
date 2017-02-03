@@ -21,3 +21,5 @@ You can clone this project directly from Android Studio and click run.
 * Display the address in a different dialog than toast (maybe snackbar).
 
 #### Please, report the issues [here](https://github.com/lalongooo/PinDetails/issues/new).
+
+### Made with :heart: in [Monterrey](https://www.google.com/maps?q=Monterrey) by [@lalongooo](https://twitter.com/lalongooo)
